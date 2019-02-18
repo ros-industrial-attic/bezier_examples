@@ -4,3 +4,6 @@
 - git: {local-name: fanuc,
         uri: 'https://github.com/ros-industrial/fanuc.git',
         version: indigo-devel}
+- git: {local-name: industrial_core,
+        uri: 'https://github.com/ros-industrial/industrial_core.git',
+        version: kinetic-devel}

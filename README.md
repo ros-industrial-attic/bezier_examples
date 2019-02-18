@@ -1,4 +1,5 @@
 # bezier_examples
+This package contains example usage of the [bezier](https://github.com/ros-industrial-consortium/bezier/) project.
 
 # Compiling
 
@@ -22,6 +23,14 @@ wstool init src src/bezier_examples/bezier_examples.rosinstall
 ## Resolve ROS dependencies
 ```bash
 rosdep install --from-paths src --ignore-src --rosdistro $ROS_DISTRO -y
+```
+
+## Fix `fanuc` package compilation
+The `fanuc` package will not compile on melodic due to old IKFast MoveIt configuration packages, see issue https://github.com/ros-industrial/fanuc/issues/241.
+You can fix them (help provided in the issue) or delete them as we won't use them:
+
+```bash
+rm -rf src/fanuc/*_moveit_config src/fanuc/*_moveit_plugins
 ```
 
 ## Compile
