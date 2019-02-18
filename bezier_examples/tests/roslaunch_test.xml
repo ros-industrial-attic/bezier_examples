@@ -4,7 +4,7 @@
   <arg name="mesh_cad_str" value="plane/plane_defect.ply" />
 
   <group ns="bezier_examples_surfacing__">
-    <include file="$(find bezier_examples)/launch/fanuc_m20ia_surfacing.launch">
+    <include file="$(find bezier_examples)/launch/fanuc_m10ia_surfacing.launch">
       <arg name="sim" value="false" />
       <arg name="robot_ip" value="127.0.0.1" />
       <arg name="mesh_cad" value="$(arg mesh_cad_str)" />
@@ -12,7 +12,7 @@
     </include>
   </group>
 	<group ns="bezier_examples_painting__">
-	 <include file="$(find bezier_examples)/launch/fanuc_m20ia_painting.launch">
+	 <include file="$(find bezier_examples)/launch/fanuc_m10ia_painting.launch">
       <arg name="sim" value="false" />
       <arg name="robot_ip" value="127.0.0.1" />
       <arg name="mesh_cad" value="$(arg mesh_cad_str)" />

@@ -10,13 +10,13 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <depend>bezier</depend>
-  <depend>fanuc_m20ia_support</depend>
+  <depend>fanuc_m10ia_moveit_config_melodic</depend>
+  <depend>fanuc_m10ia_support</depend>
   <depend>moveit_ros_planning_interface</depend>
   <depend>roscpp</depend>
+  <depend>roslaunch</depend>
   <depend>rviz_visual_tools</depend>
-  <depend>tf</depend>
   <depend>tf_conversions</depend>
+  <depend>tf</depend>
   <depend>visualization_msgs</depend>
-
-  <exec_depend>fanuc_m20ia_moveit_config</exec_depend>
 </package>

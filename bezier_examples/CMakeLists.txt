@@ -5,9 +5,11 @@ add_compile_options(-std=c++11 -Wall -Wextra)
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS
   bezier
-  fanuc_m20ia_support
+  fanuc_m10ia_moveit_config_melodic
+  fanuc_m10ia_support
   moveit_ros_planning_interface
   roscpp
+  roslaunch
   rviz_visual_tools
   tf
   tf_conversions
@@ -23,8 +25,17 @@ find_package(catkin REQUIRED COMPONENTS
 ###################################
 
 catkin_package(
-  DEPENDS
+  CATKIN_DEPENDS
   bezier
+  fanuc_m10ia_moveit_config_melodic
+  fanuc_m10ia_support
+  moveit_ros_planning_interface
+  roscpp
+  roslaunch
+  rviz_visual_tools
+  tf
+  tf_conversions
+  visualization_msgs
 )
 
 ###########
@@ -64,6 +75,5 @@ target_link_libraries(
 #############
 
 if (CATKIN_ENABLE_TESTING)
-  find_package(roslaunch REQUIRED)
-  roslaunch_add_file_check(tests/roslaunch_test_bezier_examples.xml)
+  roslaunch_add_file_check(tests/roslaunch_test.xml)
 endif()
