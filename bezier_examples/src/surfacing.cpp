@@ -137,36 +137,45 @@ int main(int argc,
   group.setPlanningTime(2);
 
   // Execute robot trajectory
-  moveit_msgs::ExecuteKnownTrajectory srv;
-  srv.request.wait_for_execution = true;
-  ros::ServiceClient executeKnownTrajectoryServiceClient = nh.serviceClient<moveit_msgs::ExecuteKnownTrajectory>(
-      "/execute_kinematic_path");
+  moveit::planning_interface::MoveGroupInterface::Plan plan;
 
   tf::TransformListener listener(nh);
   while (nh.ok())
   {
     // Bezier trajectory
-    if (group.computeCartesianPath(way_points_msg, 0.05, 0.0, srv.request.trajectory) < 0.95)
+    double result(group.computeCartesianPath(way_points_msg, 0.05, 15, plan.trajectory_));
+    if (result == -1)
     {
-      ROS_ERROR_STREAM(
-          "Bezier application: A solution could not be found to move the robot along the trajectory, aborting.");
-      break;
+      ROS_ERROR_STREAM("Path planning failed");
+      return 1;
     }
-    executeKnownTrajectoryServiceClient.call(srv);
+
+    if (!group.execute(plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS)
+    {
+      ROS_ERROR_STREAM("Could not execute planned trajectory");
+      return 1;
+    }
 
     // Return to first point
     std::vector<geometry_msgs::Pose> way_points_msg_tmp(1);
     way_points_msg_tmp[0] = way_points_msg[0];
     listener.waitForTransform("/base", tcp_name, ros::Time::now(), ros::Duration(3.0));
-    sleep(1);
-    if (group.computeCartesianPath(way_points_msg_tmp, 0.05, 0.0, srv.request.trajectory) < 0.95)
+    ros::Duration(1).sleep();
+
+    result = group.computeCartesianPath(way_points_msg, 0.05, 15, plan.trajectory_);
+    if (result == -1)
     {
-      ROS_ERROR_STREAM(
-          "Bezier application: A solution could not be found to move the robot along the trajectory, aborting.");
-      continue;
+      ROS_ERROR_STREAM("Path planning failed");
+      return 1;
     }
-    executeKnownTrajectoryServiceClient.call(srv);
-    sleep(1);
+
+    if (!group.execute(plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS)
+    {
+      ROS_ERROR_STREAM("Could not execute planned trajectory");
+      return 1;
+    }
+
+    ros::Duration(1).sleep();
   }
 
   spinner.stop();

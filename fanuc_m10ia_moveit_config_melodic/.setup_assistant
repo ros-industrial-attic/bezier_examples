@@ -8,4 +8,4 @@ moveit_setup_assistant_config:
   CONFIG:
     author_name: Victor Lamoine
     author_email: victor.lamoine@gmail.com
-    generated_timestamp: 1550484830
+    generated_timestamp: 1550487063
