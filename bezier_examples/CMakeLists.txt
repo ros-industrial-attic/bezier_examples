@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(bezier_application)
+project(bezier_examples)
 add_compile_options(-std=c++11 -Wall -Wextra)
 
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS
-  bezier_library
+  bezier
   fanuc_m20ia_support
   moveit_ros_planning_interface
   roscpp
@@ -24,7 +24,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package(
   DEPENDS
-  bezier_library
+  bezier
 )
 
 ###########
@@ -65,5 +65,5 @@ target_link_libraries(
 
 if (CATKIN_ENABLE_TESTING)
   find_package(roslaunch REQUIRED)
-  roslaunch_add_file_check(tests/roslaunch_test_bezier_application.xml)
+  roslaunch_add_file_check(tests/roslaunch_test_bezier_examples.xml)
 endif()

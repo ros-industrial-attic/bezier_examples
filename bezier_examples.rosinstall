@@ -1,0 +1,6 @@
+- git: {local-name: bezier,
+        uri: 'https://github.com/ros-industrial-consortium/bezier.git',
+        version: melodic}
+- git: {local-name: fanuc,
+        uri: 'https://github.com/ros-industrial/fanuc.git',
+        version: indigo-devel}

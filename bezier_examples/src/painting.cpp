@@ -12,8 +12,7 @@
 #include <moveit_msgs/ExecuteKnownTrajectory.h>
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
-
-#include "bezier_library/bezier_painting.hpp"
+#include <bezier/painting.hpp>
 
 /** Name of the move_group used to move the robot */
 const std::string move_group_name("manipulator");
@@ -28,7 +27,7 @@ const std::string tcp_name("/tool0");
 int main(int argc,
          char **argv)
 {
-  std::string package = "bezier_application";
+  std::string package = "bezier_examples";
   ros::init(argc, argv, package);
   ros::NodeHandle nh;
 
@@ -52,7 +51,7 @@ int main(int argc,
   std::string mesh_defect_path("");
 
   // Generate trajectory
-  double grinder_width = 0.031; // meters
+  double painting_width = 0.031; // meters
   unsigned covering_percentage = 0; // %
   double extrication_radius = 0.04; // meters
   double angle_value = -0.22; // radians
@@ -61,7 +60,7 @@ int main(int argc,
   try
   {
     bezier_planner.reset(
-        new BezierPainting(mesh_cad_path, grinder_width, covering_percentage, extrication_radius, angle_value, axis));
+        new BezierPainting(mesh_cad_path, painting_width, covering_percentage, extrication_radius, angle_value, axis));
   }
   catch (std::exception &bezier_exception)
   {
@@ -91,8 +90,8 @@ int main(int argc,
 
   EigenSTL::vector_Isometry3d way_points_vector;
   std::string error_message;
-  std::vector<bool> is_grinding_pose;
-  error_message = bezier_planner->generateTrajectory(way_points_vector, is_grinding_pose);
+  std::vector<bool> is_painting_pose;
+  error_message = bezier_planner->generateTrajectory(way_points_vector, is_painting_pose);
 
   if (!error_message.empty() || way_points_vector.empty())
   {
@@ -123,7 +122,7 @@ int main(int argc,
 
   // Initialize move group
   moveit::planning_interface::MoveGroupInterface group(move_group_name);
-  group.setPoseReferenceFrame("/base_link");
+  group.setPoseReferenceFrame("base_link");
   group.setPlannerId("RRTConnectkConfigDefault");
   group.setPlanningTime(2);
 

@@ -12,8 +12,7 @@
 #include <moveit_msgs/ExecuteKnownTrajectory.h>
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
-
-#include "bezier_library/bezier_grinding_surfacing.hpp"
+#include <bezier/grinding_surfacing.hpp>
 
 /** Name of the move_group used to move the robot */
 const std::string move_group_name("manipulator");
@@ -28,7 +27,7 @@ const std::string tcp_name("/tool0");
 int main(int argc,
          char **argv)
 {
-  std::string package = "bezier_application";
+  std::string package = "bezier_examples";
   ros::init(argc, argv, package);
   ros::NodeHandle nh;
 
@@ -133,7 +132,7 @@ int main(int argc,
 
   // Initialize move group
   moveit::planning_interface::MoveGroupInterface group(move_group_name);
-  group.setPoseReferenceFrame("/base_link");
+  group.setPoseReferenceFrame("base_link");
   group.setPlannerId("RRTConnectkConfigDefault");
   group.setPlanningTime(2);
 
